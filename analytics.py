@@ -68,13 +68,18 @@ class MaxExpenseFinder:
         Returns:
             tuple(int, float) или None - массив вида (день, суммарная_трата) для дня с максимальными тратами
         """
-        current_max = 0
+        max_amount = 0.0
         max_day = None
-        for day in range(daily_totals):
-            if daily_totals[day] > current_max:
-                current_max = daily_totals[day]
-                max_day = day + 1
-        return (max_day) if max_day != None else None
+    
+        for day in range(1, 32):
+            if daily_totals[day] > max_amount:
+                max_amount = daily_totals[day]
+                max_day = day
+    
+            if max_day is None or max_amount == 0:
+                return None
+    
+        return (max_day, max_amount)
 
     def find_max_expense(self, expenses_list):
         """
