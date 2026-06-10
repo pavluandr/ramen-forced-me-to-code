@@ -4,3 +4,4 @@ __pycache__
 DSstore
 pytest.cache
 models_tests.py
+utils_tests.py

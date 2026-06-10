@@ -127,148 +127,39 @@ def print_separator():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def extract_day_from_date(date_string):
+    """
+    Извлекает номер дня из строки с датой.
+    Поддерживает форматы: YYYY-MM-DD и DD.MM.YYYY
+    """
+    if '-' in date_string:
+        return int(date_string.split('-')[2])
+    elif '.' in date_string:
+        return int(date_string.split('.')[0])
+    else:
+        raise ValueError(f"Неизвестный формат даты: {date_string}")
+
+
+def try_parse_date(user_input):
+    """
+    Пробует преобразовать ввод пользователя в день.
+    Возвращает: (день, успех или нет)
+    """
+    if user_input.isdigit():
+        day = int(user_input)
+        return day, validate_day(day)
+    else:
+        try:
+            day = extract_day_from_date(user_input)
+            return day, validate_day(day)
+        except ValueError:
+            return None, False
+
+
+def get_validated_day_from_user(user_input):
+    """Возвращает валидный день или выбрасывает исключение"""
+    day, is_valid = try_parse_date(user_input)
+    if is_valid:
+        return day
+    else:
+        raise ValueError(f"'{user_input}' не является корректным днём (1-31) или датой")
