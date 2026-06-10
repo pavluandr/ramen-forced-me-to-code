@@ -5,3 +5,4 @@ DSstore
 pytest.cache
 models_tests.py
 utils_tests.py
+storage_tests.py
