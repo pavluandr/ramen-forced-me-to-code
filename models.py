@@ -75,7 +75,7 @@ class DayExpense:
         self.left = None
         self.right = None
     
-    def add_expence(self, expense):
+    def add_expense(self, expense):
         """Добавляет объект класса Expence в список трат"""
         self.expenses.append(expense)
     
