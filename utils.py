@@ -72,8 +72,8 @@ def get_date_range_input():
     print("\n--- Запрос суммы за период ---")
     
     while True:
-        day_a = get_day_input("Введите в день A (начало периода): ")
-        day_b = get_day_input("Введите в день В (конец периода): ")
+        day_a = get_day_input("Введите день A (начало периода): ")
+        day_b = get_day_input("Введите день В (конец периода): ")
         
         if day_a <= day_b:
             return (day_a, day_b)
@@ -163,3 +163,76 @@ def get_validated_day_from_user(user_input):
         return day
     else:
         raise ValueError(f"'{user_input}' не является корректным днём (1-31) или датой")
+    
+
+def load_expenses_from_file(filepath):
+    """
+    Загружает расходы из текстового файла.
+    
+    Формат файла: каждая строка содержит "день,сумма,категория"
+    Пример: "5,250.50,Еда"
+    
+    Arguments:
+        filepath (str) - путь к файлу
+    
+    Returns:
+        list[Expense] - список объектов Expense
+    
+    Exceptions:
+        FileNotFoundError - если файл не найден
+        ValueError - если данные в файле некорректны
+    """
+    from models import Expense
+    
+    expenses = []
+    line_number = 0
+    
+    with open(filepath, 'r', encoding='utf-8') as file:
+        for line in file:
+            line_number += 1
+            line = line.strip()
+            
+            if not line:
+                continue
+            
+            # Разделяем строку
+            parts = line.split(',')
+            if len(parts) != 3:
+                raise ValueError(f"Ошибка в строке {line_number}: ожидается 3 значения (день,сумма,категория)")
+            
+            try:
+                day = int(parts[0])
+                amount = float(parts[1])
+                category = parts[2].strip()
+                
+                # Валидация данных
+                if not validate_day(day):
+                    raise ValueError(f"День {day} должен быть от 1 до 31")
+                if not validate_amount(amount):
+                    raise ValueError(f"Сумма {amount} должна быть положительной")
+                if not category:
+                    category = "Прочее"
+                
+                expense = Expense(day, amount, category)
+                expenses.append(expense)
+                
+            except ValueError as e:
+                raise ValueError(f"Ошибка в строке {line_number}: {e}")
+    
+    return expenses
+
+
+def get_data_file_path(filename="expenses.txt"):
+    """
+    Возвращает путь к файлу с данными.
+    
+    Arguments:
+        filename (str) - имя файла
+    
+    Returns:
+        str - полный путь к файлу
+    """
+    import os
+    # Предполагаем, что файл лежит в папке data рядом с программой
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(current_dir, "data", filename)

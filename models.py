@@ -8,7 +8,7 @@ class Expense:
         category (str) - категории траты, например "Еда", "Спорт"
     
     Methods:
-        __init__(seld, day, amount, category) - инициализария объекта
+        __init__(self, day, amount, category) - инициализария объекта
         __str__(self) - вывод информации об бъекте
     """
 
@@ -62,7 +62,7 @@ class DayExpense:
         right (объект DayExpense или None) - ссылка на узел с большим днем (правое поддерево)
     
     Methods:
-        __init__(self, day, expense) — конструктор, создаёт пустой список расходов
+        __init__(self, day) — конструктор, создаёт пустой список расходов
         add_expense(self, expense) — добавляет объект Expense в список expenses
         get_total_for_day(self) — возвращает сумму всех трат за этот день
         __str__(self) — возвращает "День 5: 2 траты на сумму 300.50 руб."
