@@ -8,8 +8,8 @@ class Expense:
         category (str) - категории траты, например "Еда", "Спорт"
     
     Methods:
-        __init__ - инициализария объекта
-        __str__ - вывод информации об бъекте
+        __init__(seld, day, amount, category) - инициализария объекта
+        __str__(self) - вывод информации об бъекте
     """
 
     def __init__(self, day, amount, category):
@@ -76,7 +76,7 @@ class DayExpense:
         self.right = None
     
     def add_expense(self, expense):
-        """Добавляет объект класса Expence в список трат"""
+        """Добавляет объект класса Expense в список трат"""
         self.expenses.append(expense)
     
     def get_total_for_day(self):
