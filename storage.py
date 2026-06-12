@@ -1,7 +1,3 @@
-"""
-storage.py - реализация бинарного дерева поиска для хранения расходов по дням
-"""
-
 from models import DayExpense, Expense
 
 
